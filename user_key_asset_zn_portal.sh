@@ -16,7 +16,7 @@
 #Declare Variables:
 SUDO_FILE='/etc/sudoers.d/zn-admin'
 USER_NAME='zn-admin'
-PASS_WORD='6jUU5O!43!pX'
+PASS_WORD='xxxxxxx'
 SSH_DIR='/home/zn-admin/.ssh/'
 
 #Make sure the script is being executed with superuser privileges
@@ -64,7 +64,7 @@ fi
 ##Create authorized_keys file if not exist
 if [ ! -e "$SSH_DIR/authorized_keys" ]
 then
-    install -m 600 <(echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDW59gHn6JTYa7q/ZaPsuiUQ563ji56cTNeM02IulzNSyvZQBN9EfweQ0WFaSmug3xstW37ge/moiZDUUxP3qBfXVCX/ktN2wfOhaRV6yTJFXsBFhT9qbrYQtuLGEnrooZl6TOGXVxTWoJU+scr4S7zqIGZqghNhHFu+BwlNURR8FE6EAucNanL1KF7eo1O8cIsIvgDH5qADbCUS9gkFT2gBaOlAAvEfseke0K2Ka7LMOOoB0QnY0JXfpdIt3U0GssH7td4MmZDxBTmv2wEQorh9H4nZ1TGO3hjXWEV/S/T7PcFo4woc8mvJdDv8vSNCnVU7TaZ4XfDrvkZ48HmHclLP9cJsJ9e7ayIee1hVxj4QaSbFJVlhs+3wu539oSxxzExC9zb65yzB4E2JtC7GOKjYvqllrM01vaqAAYqcGlO6DqRvpZoZGioQY6oaXrmdGnNTAZCqf58Lp4G13N8+Fb2D8kz96L/XnIgPMVWHwqdHggdS/+NikcrzifR89/oXA4cDLNV4zFUzBcdgltETUiFW6OmydB0NMC3m/O7vPw6hMoiFV6obcwnUoUoN+DsPBQn69XpzWtxFc1bb91DbOi+WbXNdR4DkMD6lROXgpTm1ypR47dM2+I1pxWnOrFXdfBBzmoXXKRw1nWwswMb27DjqPaIYJDQFbs/eWfvi9dLtQ==") "$SSH_DIR/authorized_keys"
+    install -m 600 <(echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDW59gHn6JTYa7q/ZaPsuxxxxxxx==") "$SSH_DIR/authorized_keys"
 fi
 
 #Set owner
@@ -88,17 +88,6 @@ exit 0
 #
 
 for HOST in $(cat /home/vadimkol/ansible_scripts/ansible_zero_net/inventory)
-do curl -k -X 'POST' 'https://portal.zeronetworks.com/api/v1/assets/linux' -H 'accept: */*' -H 'Authorization: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtOmU1MWRkYWViM2M0NTM1ZGU2MDUzZTExNWMwMTBjZTg1ZDY4Y2VmZGEiLCJuYW1lIjoiem4tYWRtaW4iLCJlaWQiOiI3N2U1ZmM3Yy0wZjU2LTQ4NGMtOWU1Zi1jZTBjNTg5ODFkM2QiLCJzY29wZSI6NCwiZV9uYW1lIjoiSGFyZWwtZ3JvdXAiLCJ2IjoxLCJpYXQiOjE2ODMxMDkwMjksImV4cCI6MTc0NjI2NzQyNywiYXVkIjoicG9ydGFsLnplcm9uZXR3b3Jrcy5jb20iLCJpc3MiOiJ6ZXJvbmV0d29ya3MuY29tL2FwaS92MS9hY2Nlc3MtdG9rZW4ifQ.cFXdNtowMXoQHUEEhVK-2vYkjbVfVo05HjcxtGCXQjNl9mVz3-wZa8zXePlKBfe3pQE8JuPtAtLMC2CZDIphCznYJd7T1u3iWhLoImjO6S6W-JXyepGwor_yu7WdgLAH9S-PU4FMmhGE3a3F1G-0_tTMcetHv31ngQf3zPHtkBRtOnw2Hzpqifaf0kdCbWikncE9NUkbHuy9LA1eShEPSsD5PC-gVu1zmVueqVcV5AUhoUB4dcDkRCJAOatkH5jzmr0Mvp3wBXpFqqoUlXV0L84yDzlSkN7-dBHnoYkGhLGmAUttIRhPb_5Mpbe_TQoo6kmHFGFwv3qkonMzVIBS7w' -H 'Content-Type: application/json' -d '{ "displayName": "'$HOST'", "fqdn": "'$HOST'" }'
+do curl -k -X 'POST' 'https://portal.zeronetworks.com/api/v1/assets/linux' -H 'accept: */*' -H 'Authorization: eyJhbGciOiJSUzI1NiIsInxxxxxxxw' -H 'Content-Type: application/json' -d '{ "displayName": "'$HOST'", "fqdn": "'$HOST'" }'
 done
-
 exit 0
-
-
-===========================================================================================================================================
-===========================================================================================================================================
-
-#TEST!!! Trying to get short hostname from FQDN - doesn't work with json (in curl command), it will be read as a text string
-
-for HOST in $(cat /home/vadimkol/ansible_scripts/ansible_zero_net/inventory)
-do echo "$HOST | cut -d'.' -f1"
-done
