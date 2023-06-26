@@ -65,14 +65,14 @@ vault secrets enable kv-v2
 
 vault write auth/ldap/config \
 anonymous_group_search=false \
-binddn="cn=lnxtask,ou=AppUsers,ou=Services,dc=harel-office,dc=com" \
+binddn="cn=lnxtask,ou=AppUsers,ou=Services,dc=xxxxxx,dc=com" \
 bindpass='$STqvh3ub}6~QH.' \
 case_sensitive_names=false \
 deny_null_bind=true \
 discoverdn=false \
 groupattr="cn" \
-groupdn="ou=HashiVault,ou=Services,dc=harel-office,dc=com" \
-groupfilter="(&(objectCategory=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
+groupdn="ou=HashiVault,ou=Services,dc=xxxxxxx,dc=com" \
+groupfilter="(&(objectCategory=group)(member:1.2.840.113556.xxxxx:={{.UserDN}}))" \
 insecure_tls=true \
 request_timeout="90" \
 starttls=false \
@@ -127,25 +127,6 @@ echo $ISSUER
 
 #This part of creating Namespace is only we have K8s environment to work with hashiVault
 vault auth enable kubernetes
-
-#I suppose that exports belwo are to run on vault server - but yet to check!!
-
-#This export relates to environmnet, either Test, Staging or Production
-export K8S_HOST='https://D7F768B5564FDE87175FFD56B7D85425.yl4.eu-central-1.eks.amazonaws.com'
-
-##### K8S_HOST in AWS - theur names may be different!!   #####
-#Prod K8S_HOST
-#host D7F768B5564FDE87175FFD56B7D85425.yl4.eu-central-1.eks.amazonaws.com    -prod ?
-#host B8A51495ADB010457787A4F588C157BE.sk1.eu-central-1.eks.amazonaws.com    -satging ?
-
-#Test K8S_HOST
-#K8S_HOST='https://8D2271B61272AB4D6ED714D52EDB8C60.yl4.eu-central-1.eks.amazonaws.com'
-
-#Pay attention to these next two exports - are they unique and being generated each time??
-export TOKEN_REVIEW_JWT='eyJhbGciOiJSUzI1NiIsImtpZCI6IjVuSno2bVpLZm5RRWNOUFJERG5FbUM0NG4yVVc2T21lR0E4akJtdUFaM0UifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ2YXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJ2YXVsdC1hdXRoIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InZhdWx0LWF1dGgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIwZWVjY2VjOS0wMDg3LTRhOTItYWIyNC03NDFjMjY1MDQ3ZjciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6dmF1bHQ6dmF1bHQtYXV0aCJ9.qyhHaaMuWNsODZJVWcomtKk01iKY0S5OEco5PVbZQQQBpklFCT2CrXDudIcodLMRkkaYhhE59EcqeQYV6M1y_pes2_ewbLzu2Eo1ysFOWWMlygcvl2mIAUVd_ZrUSQWWHkASznJM3p30g9bpQdIs9g9R-slvFfaEkAUl0P30K9J0xzJR8mRCIcPCRCk09moa1Bl00NRJeSnRVP4vyvNK9FVVPF3gAxetBuz407vv5aJUdxePrCmXx_kp-hWTy1Xs1Zw_cIWWTu4DIL51QMebCpE7VR1D8kJwmVGe1NeQ4_Scig1F57VVkKXG3wuoOdKS3sfPfTq9bVDXPXDg1mkCPQ'
-export K8S_CA_CERT='-----BEGIN CERTIFICATE----- MIICyDCCAbCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl cm5ldGVzMB4XDTE5MDgxMzEzMTAyNFoXDTI5MDgxMDEzMTAyNFowFTETMBEGA1UE AxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKsp ITodmxmTcC8c2WHKKOAsVyBdCs1QV3iiKg4vE+9d+XvdDetjOLnZka6ROaVTkxqt lzxiffbccHqeSPec8aMn2FmULWtlTQs5GYDWo2Uhi5/uMMEiewgr/DU2FN4/EhYl aIRIjrLgiUurWW/4A1KOwuIOFjEqaLdEl1/Mbnm5v27tvVy4h5GWu+RZk1KCL18r gpZSkkdJ+2j4UuqL3aQ5c1y6Z8mO/oih3eHkvyxsNLLVU4eBQGn6SHxnnNe9NWG3 1fG9SliGXUsdaN/+r/hKvaofK0tlFY8pYlW9cpFxFUNb4sTOwZWQVxmNL4IVgrmk Y/FX3yXeb8kfyedOMysCAwEAAaMjMCEwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB /wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAC2s097zSEWUTyWHEmEYRuf0azdR YDNInycfhXIlj/yAU3o5sWf0/iKGoWlZ0ML1uLMwJNOZZMiLDVdnOWoCWagkdRrc H87yHTnxnSkuLxDlO7ny5TMYqGC0OIFQ5A+/BjWsAmxGcqtDZAa3iJ8F2vGeerXG luteKW4xuuZdPzr6MmfBWzILg0Fzs5LabQ2mFsJYArLDVIlJUy0OFg+GGnINdQH9 tqdyVoteWMrmlR/v4GC02jK2BXA9q22pe+3ctrkBlrVIJRhuWY3eFophGgmqkqwB fW4dfI7UNdPWDhuLrAvqzxoOlIBQ7YxdIz4Thdvxj4OSWs+TunszInEirK0= -----END CERTIFICATE-----'
-export ISSUER='https://oidc.eks.eu-central-1.amazonaws.com/id/8D2271B61272AB4D6ED714D52EDB8C60'
-
 vault write auth/kubernetes/config kubernetes_host="$K8S_HOST" kubernetes_ca_cert="@K8S_CA_CERT" token_reviewer_jwt="$TOKEN_REVIEW_JWT" issuer="$ISSUER"
 vault write auth/kubernetes/role/vault-auth bound_service_account_names="vault-auth" bound_service_account_namespaces="*" token_policies="application" policies="application" token_ttl="24h" ttl="24h"
 vault write auth/kubernetes/role/digitalsa bound_service_account_names="digitalsa" bound_service_account_namespaces="*" token_policies="application" policies="application" token_ttl="24h" ttl="24h"
