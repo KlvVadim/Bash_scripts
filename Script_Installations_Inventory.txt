@@ -1,0 +1,17 @@
+#!/bin/bash
+# Script checks what services/applications run on remote server
+# Use ./this_script remote_server (--> $1)
+#
+ssh -t -q $1 'sudo findmnt |grep -w nfs > /dev/null && echo "nfs_mount exist"'
+ssh -t -q $1 'sudo findmnt |grep -w cifs > /dev/null && echo "smb_mount exist"'
+ssh -t -q $1 'sudo rpm -qa |grep -i cark > /dev/null &&  echo "cyberark_agent_installed"'
+ssh -t -q $1 'sudo  ps -eaf |grep -w tomca[t] |grep -v "grep" > /dev/null && echo "tomcat exists"'
+ssh -t -q $1 'sudo cat /etc/rsyslog.conf |grep ":515" > /dev/null && echo rsyslog_siem_conf exists'
+ssh -t -q $1 'sudo  ps -eaf |grep -w uc[4] |grep -v "grep" > /dev/null&& echo uc4 exists'
+ssh -t -q $1 'sudo crontab -l | egrep -v "etc/krb5.keytab|snow" > /dev/null && echo crontab exists'
+ssh -t -q $1 'sudo cat /var/log/secure |grep "Accepted publickey for"| grep -v "Accepted publickey for lnxadmin" > /dev/null && echo ssh_keys exists'
+ssh -t -q $1 'sudo cat /etc/ssh/sshd_config |grep -w "ForceCommand /usr/sbin/login_du[o]" > /dev/null && echo duo exists'
+ssh -t -q $1 'sudo locate pip.conf > /dev/null && echo pip_conf exists'
+ssh -t -q $1 'sudo ps -eaf |grep -i ora_pmo[n] | grep -v "grep" > /dev/null && echo oracle_service exists'
+ssh -t -q $1 'sudo ip a |egrep "10.90|10.190" > /dev/null && echo oob_config exist'
+ssh -t -q $1 'sudo ps -eaf |grep -w dynatrac[e] |grep -v "grep" > /dev/null && echo dynatrace_agent  exists'
